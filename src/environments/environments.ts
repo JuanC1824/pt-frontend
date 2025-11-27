@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'https://pt-backend-pbja.onrender.com' 
+  apiUrl: '__API_URL__'
 };

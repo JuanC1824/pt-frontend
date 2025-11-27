@@ -7,17 +7,23 @@ COPY package*.json ./
 RUN npm install
 
 COPY . .
-RUN npm run build --prod
+RUN npm run build   # ya no usamos --prod, Angular 15+ toma el environment automáticamente
 
 # STAGE 2: Serve with NGINX
 FROM nginx:alpine
 
-COPY --from=build /app/dist/frontend/browser /usr/share/nginx/html
+# Copiar la build de Angular
+COPY --from=build /app/dist/frontend /usr/share/nginx/html
+
+# Copiar configuración NGINX
+COPY default.conf /etc/nginx/conf.d/default.conf
+
+# Copiar el entrypoint para reemplazo de environment
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 EXPOSE 80
 
-CMD ["nginx", "-g", "daemon off;"]
+# Ejecutar el entrypoint
+CMD ["/entrypoint.sh"]
 
-
-# Al final del Dockerfile
-COPY default.conf /etc/nginx/conf.d/default.conf
