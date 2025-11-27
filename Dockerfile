@@ -11,16 +11,13 @@ RUN npm run build
 # STAGE 2: Serve with NGINX
 FROM nginx:alpine
 
-# Copiar el build correcto (browser) donde sí está index.html
+# Copiar el build final (browser)
 COPY --from=build /app/dist/frontend/browser /usr/share/nginx/html
 
-# Copiar environment.js
-COPY src/assets/environment.js /usr/share/nginx/html/assets/environment.js
-
-# NGINX config
+# Copiar NGINX config
 COPY default.conf /etc/nginx/conf.d/default.conf
 
-# Script para reemplazar variables
+# Script de variables
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
