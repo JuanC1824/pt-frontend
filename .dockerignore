@@ -1,0 +1,21 @@
+# Carpetas que no deben enviarse al build
+node_modules
+dist
+.git
+.angular
+.vscode
+
+# Archivos del sistema o que no sirven en Docker
+.gitignore
+Dockerfile
+docker-compose.yml
+npm-debug.log
+yarn-error.log
+package-lock.json
+
+# Logs
+*.log
+
+# Archivos pesados opcionales (si los necesitas en Angular, bórralos de aquí)
+*.zip
+*.rar
