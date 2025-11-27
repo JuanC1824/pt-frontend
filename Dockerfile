@@ -2,30 +2,27 @@
 FROM node:20 AS build
 
 WORKDIR /app
-
 COPY package*.json ./
 RUN npm install
 
 COPY . .
-RUN npm run build   # Angular 15+ toma el environment automáticamente
+RUN npm run build
 
 # STAGE 2: Serve with NGINX
 FROM nginx:alpine
 
-# Copiar la build de Angular
-COPY --from=build /app/dist/frontend /usr/share/nginx/html
+# Copiar el build correcto (browser) donde sí está index.html
+COPY --from=build /app/dist/frontend/browser /usr/share/nginx/html
 
-# Copiar environment.js después para asegurarse que la carpeta exista
+# Copiar environment.js
 COPY src/assets/environment.js /usr/share/nginx/html/assets/environment.js
 
-# Copiar configuración NGINX
+# NGINX config
 COPY default.conf /etc/nginx/conf.d/default.conf
 
-# Copiar el entrypoint para reemplazo de environment
+# Script para reemplazar variables
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 EXPOSE 80
-
-# Ejecutar el entrypoint
 CMD ["/entrypoint.sh"]
