@@ -5,11 +5,13 @@ import { jwtDecode } from 'jwt-decode';
 import { LoginRequest, RegisterRequest, AuthResponse, UserDecoded } from '../models/auth.models';
 import { Router } from '@angular/router';
 
+declare const window: any;
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
-  private apiUrl = 'http://localhost:3005/api/auth'
+  private apiUrl = window.__env.API_URL + '/api/auth';
 
   private currentUserSubject = new BehaviorSubject<UserDecoded | null>(this.getUserFromStorage());
   public currentUser$ = this.currentUserSubject.asObservable();
