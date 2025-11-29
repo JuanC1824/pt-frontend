@@ -13,7 +13,7 @@ export class ProductService {
   private http = inject(HttpClient);
 
   // URL basada en tu 'application.properties' (puerto 3005) y 'ProductController' (/api/products)
-  private apiUrl = window.__env.API_URL + '/products';
+  private apiUrl = window.__env.API_URL + '/api/products';
 
   /**
    * Obtener todos los productos

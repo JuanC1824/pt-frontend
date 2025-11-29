@@ -11,7 +11,7 @@ declare const window: any;
 export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
-  private apiUrl = window.__env.API_URL + '/auth';
+  private apiUrl = window.__env.API_URL + '/api/auth';
 
   private currentUserSubject = new BehaviorSubject<UserDecoded | null>(this.getUserFromStorage());
   public currentUser$ = this.currentUserSubject.asObservable();
