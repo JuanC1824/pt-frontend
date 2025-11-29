@@ -1,3 +1,3 @@
 window.__env = {
-  API_URL: "__API_URL__"
+  API_URL: "https://pt-backend-6pfj.onrender.com/api"
 };
